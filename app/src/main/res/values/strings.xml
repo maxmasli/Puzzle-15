@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">puzzle15</string>
+    <string name="new_game">New Game</string>
+    <string name="you_win">You win!!!</string>
+</resources>
