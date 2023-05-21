@@ -3,15 +3,21 @@ package masli.prof.puzzle15
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.mockito.Mockito.mock
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun getTileTest() {
+        val mockEngine = mock(Puzzle15Engine::class.java)
+        mockEngine.newPuzzle()
+        val tiles = mutableListOf<Int>()
+        for (i in 0..3) {
+            for (j in 0..3) {
+                tiles.add(mockEngine.getTile(i, j))
+            }
+        }
+
+        assertEquals(tiles.size, mockEngine.puzzleSize*mockEngine.puzzleSize)
+
     }
 }

@@ -1,6 +1,6 @@
 package masli.prof.puzzle15
 
-class Puzzle15Engine {
+open class Puzzle15Engine {
 
     /**
      * List contains numbers from 1 to 15
@@ -47,10 +47,7 @@ class Puzzle15Engine {
 
     private fun moveTile(direction: Direction) {
         move(direction)
-        if (checkField()) {
-            println("YOU WIN!!!!")
-            isOver = true
-        }
+        isOver = checkField();
     }
 
     private fun generateField() {
@@ -124,17 +121,22 @@ class Puzzle15Engine {
 
     private fun isSolvable(): Boolean {
         var countInversions = 0
-        val flatten = field.flatten().toMutableList().apply {
-            remove(0)
-        }
-        for (i in 0 .. puzzleSize) {
-            for (j in 0 .. i) {
-                if (flatten[j] > flatten[i]) countInversions++
+        val flattenField = field.flatten().toMutableList()
+        for (i in 0 until puzzleSize*puzzleSize) {
+            if (flattenField[i] != 0) {
+                for (j in 0 until i) {
+                    if (flattenField[j] > flattenField[i]) {
+                        ++countInversions
+                    }
+                }
             }
         }
-
+        for (i in 0 until puzzleSize*puzzleSize) {
+            if (flattenField[i] == 0){
+                countInversions += 1 + i / puzzleSize
+            }
+        }
         return countInversions % 2 == 0
-
     }
 
     private fun checkField(): Boolean {
