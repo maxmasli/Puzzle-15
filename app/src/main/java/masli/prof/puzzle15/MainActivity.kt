@@ -3,8 +3,11 @@ package masli.prof.puzzle15
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.appcompat.widget.LinearLayoutCompat
 
 
@@ -15,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fieldLinearLayout: LinearLayoutCompat
     private lateinit var newGameButton: Button
     private lateinit var messageTextView: TextView
-
+    private lateinit var moveCounterTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         fieldLinearLayout = findViewById(R.id.fieldLinearLayout)
         newGameButton = findViewById(R.id.newGameButton)
         messageTextView = findViewById(R.id.messageTextView)
+        moveCounterTextView = findViewById(R.id.moveCounterTextView)
 
+        moveCounterTextView.text = puzzle15Engine.moveCounter.toString()
         setListeners()
         puzzle15Engine.newPuzzle()
         updateField()
@@ -31,8 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         newGameButton.setOnClickListener {
-            messageTextView.text = ""
             puzzle15Engine.newPuzzle()
+            moveCounterTextView.text = puzzle15Engine.moveCounter.toString()
+            messageTextView.text = ""
             updateField()
         }
     }
@@ -71,6 +77,7 @@ class MainActivity : AppCompatActivity() {
     private fun onTileClick(x: Int, y: Int) {
         puzzle15Engine.clickAction(x, y)
         updateField()
+        moveCounterTextView.text = puzzle15Engine.moveCounter.toString()
         if (puzzle15Engine.isOver) {
             messageTextView.text = getString(R.string.you_win)
         }

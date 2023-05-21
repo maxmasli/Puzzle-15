@@ -1,6 +1,6 @@
 package masli.prof.puzzle15
 
-open class Puzzle15Engine {
+class Puzzle15Engine {
 
     /**
      * List contains numbers from 1 to 15
@@ -9,8 +9,10 @@ open class Puzzle15Engine {
     private val field = mutableListOf<MutableList<Int>>()
     val puzzleSize = 4
     var isOver = false
+    var moveCounter = 0
 
     fun newPuzzle() {
+        moveCounter = 0
         isOver = false
         generateField()
         shuffleField()
@@ -47,7 +49,8 @@ open class Puzzle15Engine {
 
     private fun moveTile(direction: Direction) {
         move(direction)
-        isOver = checkField();
+        moveCounter++
+        isOver = checkField()
     }
 
     private fun generateField() {
@@ -66,7 +69,7 @@ open class Puzzle15Engine {
 
     private fun shuffleField() {
         do {
-            val shuffledList = (0..15).shuffled().toMutableList()
+            val shuffledList = (0 until puzzleSize*puzzleSize).shuffled().toMutableList()
             for (y in 0 until puzzleSize) {
                 for (x in 0 until puzzleSize) {
                     field[y][x] = shuffledList.removeFirst()
@@ -163,8 +166,6 @@ open class Puzzle15Engine {
         }
         return sField
     }
-
-
 }
 
 enum class Direction {

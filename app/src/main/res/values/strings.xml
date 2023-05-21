@@ -2,4 +2,5 @@
     <string name="app_name">Puzzle 15</string>
     <string name="new_game">New Game</string>
     <string name="you_win">You win!!!</string>
+    <string name="moves">Moves:</string>
 </resources>
